@@ -1,0 +1,20 @@
+{
+  "author": "Cian Clarke <cian@cianclarke.com> (http://www.cianclarke.com)",
+  "name": "met",
+  "description": "Simple node module for retrieving Irish weather information from the MET service",
+  "version": "0.0.1",
+  "homepage": "github.com/cianclarke/met",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:cianclarke/met.git"
+  },
+  "main": "app.js",
+  "engines": {
+    "node": "~0.6.2"
+  },
+  "dependencies": {
+    "request" : "*",
+    "jsdom" : "*"
+  },
+  "devDependencies": {}
+}
