@@ -7,12 +7,22 @@
       console.log(err);
       return;
     }
-    for (var d in weather){
+
+    var forecast = weather.forecast,
+    images = weather.images;
+    
+    var i=0;
+    for (var d in forecast){
       console.log(d);
-      var fc = weather[d];
+      if (images && images[i]){
+        console.log('Weather: ' + images[i].weather + '      Wind: ' + images[i].wind + '      Temp: ' + images[i].temp);
+        i++;
+      }
+
+      var fc = forecast[d];
       fc = fc.split('\n');
-      for (var i=0; i<fc.length; i++){
-        console.log(fc[i]);
+      for (var j=0; j<fc.length; j++){
+        console.log(fc[j]);
       }
     }
   });

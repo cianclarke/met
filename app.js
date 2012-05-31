@@ -9,39 +9,89 @@ exports.getWeather = function(params, cb){
         return cb(errors);
       }
 
-      // Thanks to @danielconnor for the parser code!
-      var document = window.document,
-      days = document.getElementsByClassName("daybox"),
-      day,
-      dayText,
-      nextDay,
-      sibling,
-      forecast = {},
-      index = 0;
+      var forecast = getForecasts(window);
+      var images = getWeatherImages(window);
 
-      while(day = days[index++]) {
-        nextDay = days[index];
-        var dayForecast = "";
-        sibling = day.nextSibling;
-
-        while(sibling && sibling != nextDay ) {
-          var append = sibling.textContent.trim();
-          if (append!=""){
-            dayForecast += append;
-            dayForecast += '\n';
-          }
-          sibling = sibling.nextSibling;
-        }
-        forecast[day.textContent.trim()] = dayForecast;
-
-      }
-      return cb(null, forecast);
-
-
-
+      return cb(null, {forecast: forecast, images: images});
     }
   });
-
-
-
 };
+
+
+/*
+ Get the weather images from the dom
+ @author @danielconnor
+ */
+function getWeatherImages(window) {
+  // this private switch is from the met.ie website
+  function _GetTypeToName(MapType) {
+    switch (MapType)
+    {
+      case 1:
+        return "weather" ;
+        break;
+      case 2:
+        return "wind" ;
+        break;
+      case 3:
+        return "temp";
+        break;
+      case 0:
+        return "temp";
+        break;
+    }
+  }
+
+
+  var location = "http://www.met.ie/weathermaps/",
+  images = {},
+  mapType;
+
+  for(var i = 0; i<3; i++) {
+    images[i] = {};
+
+    for(var j = 0; j<3; j++) {
+
+      mapType = _GetTypeToName(j)
+
+      images[i][mapType] = location + 'nat0' + i + '_' + mapType + '.png';
+
+    }
+  }
+  return images;
+}
+
+/*
+ Get the forecast from the DOM
+ @author @danielconnor
+ */
+function getForecasts(window){
+// Thanks to @danielconnor for the parser code!
+  var document = window.document,
+  days = document.getElementsByClassName("daybox"),
+  day,
+  dayText,
+  nextDay,
+  sibling,
+  forecast = {},
+  images = {},
+  index = 0;
+
+  while(day = days[index++]) {
+    nextDay = days[index];
+    var dayForecast = "";
+    sibling = day.nextSibling;
+
+    while(sibling && sibling != nextDay ) {
+      var append = sibling.textContent.trim();
+      if (append!=""){
+        dayForecast += append;
+        dayForecast += '\n';
+      }
+      sibling = sibling.nextSibling;
+    }
+    forecast[day.textContent.trim()] = dayForecast;
+
+  }
+  return forecast;
+}
