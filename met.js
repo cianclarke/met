@@ -3,6 +3,10 @@
   var met = require('./app.js');
 
   met.getWeather( {}, function(err, weather){
+    if (err){
+      console.log(err);
+      return;
+    }
     for (var d in weather){
       console.log(d);
       var fc = weather[d];

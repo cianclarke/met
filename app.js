@@ -3,14 +3,13 @@ var jsdom = require('jsdom');
 exports.getWeather = function(params, cb){
   jsdom.env({
     html: 'http://www.met.ie/forecasts/',
-    scripts: [
-      'http://code.jquery.com/jquery-1.5.min.js'
-    ],
+    scripts: [],
     done: function(errors, window) {
       if (errors){
         return cb(errors);
       }
 
+      // Thanks to @danielconnor for the parser code!
       var document = window.document,
       days = document.getElementsByClassName("daybox"),
       day,
