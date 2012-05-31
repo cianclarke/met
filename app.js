@@ -1,5 +1,4 @@
-var request = require('request'),
-jsdom = require('jsdom');
+var jsdom = require('jsdom');
 
 exports.getWeather = function(params, cb){
   jsdom.env({
@@ -47,14 +46,3 @@ exports.getWeather = function(params, cb){
 
 
 };
-
-exports.getWeather( {}, function(err, weather){
-  for (var d in weather){
-    console.log(d);
-    var fc = weather[d];
-    fc = fc.split('\n');
-    for (var i=0; i<fc.length; i++){
-      console.log(fc[i]);
-    }
-  }
-});
