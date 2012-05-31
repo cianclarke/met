@@ -23,15 +23,18 @@ exports.getWeather = function(params, cb){
 
       while(day = days[index++]) {
         nextDay = days[index];
-        dayForecast = "";
+        var dayForecast = "";
         sibling = day.nextSibling;
 
         while(sibling && sibling != nextDay ) {
-          dayForecast += sibling.textContent.trim();
-          dayForecast += '\n';
+          var append = sibling.textContent.trim();
+          if (append!=""){
+            dayForecast += append;
+            dayForecast += '\n';
+          }
           sibling = sibling.nextSibling;
         }
-        forecast[day.textContent] = dayForecast;
+        forecast[day.textContent.trim()] = dayForecast;
 
       }
       return cb(null, forecast);
@@ -45,6 +48,13 @@ exports.getWeather = function(params, cb){
 
 };
 
-exports.getWeather( {}, function(err, data){
-  console.log(data);
+exports.getWeather( {}, function(err, weather){
+  for (var d in weather){
+    console.log(d);
+    var fc = weather[d];
+    fc = fc.split('\n');
+    for (var i=0; i<fc.length; i++){
+      console.log(fc[i]);
+    }
+  }
 });
