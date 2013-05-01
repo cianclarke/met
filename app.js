@@ -29,16 +29,12 @@ function getWeatherImages(window) {
     {
       case 1:
         return "weather" ;
-        break;
       case 2:
         return "wind" ;
-        break;
       case 3:
         return "temp";
-        break;
       case 0:
         return "temp";
-        break;
     }
   }
 
@@ -84,7 +80,7 @@ function getForecasts(window){
 
     while(sibling && sibling != nextDay ) {
       var append = sibling.textContent.trim();
-      if (append!=""){
+      if (append!==""){
         dayForecast += append;
         dayForecast += '\n';
       }

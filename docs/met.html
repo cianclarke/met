@@ -1,0 +1,32 @@
+<!DOCTYPE html>  <html> <head>   <title>met.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="app.html">                 app.js               </a>                                           <a class="source" href="met.html">                 met.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               met.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="err">#</span><span class="o">!</span><span class="err">/usr/bin/env node</span>
+<span class="p">;(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="c1">// wrapper in case we&#39;re in module_context mode</span>
+  <span class="kd">var</span> <span class="nx">met</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./app.js&#39;</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">colors</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;colors&#39;</span><span class="p">);</span>
+
+  <span class="nx">met</span><span class="p">.</span><span class="nx">getWeather</span><span class="p">(</span> <span class="p">{},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">weather</span><span class="p">){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">var</span> <span class="nx">forecast</span> <span class="o">=</span> <span class="nx">weather</span><span class="p">.</span><span class="nx">forecast</span><span class="p">,</span>
+    <span class="nx">images</span> <span class="o">=</span> <span class="nx">weather</span><span class="p">.</span><span class="nx">images</span><span class="p">;</span>
+
+    <span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">d</span> <span class="k">in</span> <span class="nx">forecast</span><span class="p">){</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">green</span><span class="p">.</span><span class="nx">bold</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">images</span> <span class="o">&amp;&amp;</span> <span class="nx">images</span><span class="p">[</span><span class="nx">i</span><span class="p">]){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Weather: &#39;</span> <span class="o">+</span> <span class="nx">images</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">weather</span><span class="p">.</span><span class="nx">blue</span><span class="p">.</span><span class="nx">underline</span> <span class="o">+</span> <span class="s1">&#39;      Wind: &#39;</span> <span class="o">+</span> <span class="nx">images</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">wind</span><span class="p">.</span><span class="nx">blue</span><span class="p">.</span><span class="nx">underline</span> <span class="o">+</span> <span class="s1">&#39;      Temp: &#39;</span> <span class="o">+</span> <span class="nx">images</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">temp</span><span class="p">.</span><span class="nx">blue</span><span class="p">.</span><span class="nx">underline</span><span class="p">);</span>
+        <span class="nx">i</span><span class="o">++</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="kd">var</span> <span class="nx">fc</span> <span class="o">=</span> <span class="nx">forecast</span><span class="p">[</span><span class="nx">d</span><span class="p">];</span>
+      <span class="nx">fc</span> <span class="o">=</span> <span class="nx">fc</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;\n&#39;</span><span class="p">);</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">j</span><span class="o">&lt;</span><span class="nx">fc</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">fc</span><span class="p">[</span><span class="nx">j</span><span class="p">]);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">})()</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
