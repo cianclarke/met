@@ -27,7 +27,7 @@ Installation (as a CLI)
 Usage (as a module)
 ===================
 
-    var met = require('met');
+    var met = require('met'); 
 
     met.getWeather( {/* no params supported yet */}, function(err, weather){
       if (err){
