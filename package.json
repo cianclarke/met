@@ -3,7 +3,6 @@
   "name": "met",
   "description": "Simple node module for retrieving Irish weather information from the MET service",
   "version": "0.0.2",
-  "homepage": "github.com/cianclarke/met",
   "repository": {
     "type": "git",
     "url": "git@github.com:cianclarke/met.git"
