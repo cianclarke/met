@@ -1,10 +1,7 @@
 var jsdom = require('jsdom');
 
 exports.getWeather = function(params, cb){
-  jsdom.env({
-    html: 'http://www.met.ie/forecasts/',
-    scripts: [],
-    done: function(errors, window) {
+  jsdom.env('http://www.met.ie/forecasts/', ["http://code.jquery.com/jquery.js"], function(errors, window) {
       if (errors){
         return cb(errors);
       }
@@ -14,7 +11,7 @@ exports.getWeather = function(params, cb){
 
       return cb(null, {forecast: forecast, images: images});
     }
-  });
+  );
 };
 
 
@@ -57,37 +54,12 @@ function getWeatherImages(window) {
   return images;
 }
 
-/*
- Get the forecast from the DOM
- @author @danielconnor
- */
-function getForecasts(window){
-// Thanks to @danielconnor for the parser code!
-  var document = window.document,
-  days = document.getElementsByClassName("daybox"),
-  day,
-  dayText,
-  nextDay,
-  sibling,
-  forecast = {},
-  images = {},
-  index = 0;
-
-  while(day = days[index++]) {
-    nextDay = days[index];
-    var dayForecast = "";
-    sibling = day.nextSibling;
-
-    while(sibling && sibling != nextDay ) {
-      var append = sibling.textContent.trim();
-      if (append!==""){
-        dayForecast += append;
-        dayForecast += '\n';
-      }
-      sibling = sibling.nextSibling;
-    }
-    forecast[day.textContent.trim()] = dayForecast;
-
-  }
-  return forecast;
+function getForecasts (window) {
+	var forecast_text = window.$('.maincontent').text();
+	return forecast_text.split('\n').map(function (el) {
+		return el.trim();
+	}).filter(function (el) {
+		return el != '';
+	}).join('\n');
 }
+
