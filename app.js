@@ -1,10 +1,7 @@
 var jsdom = require('jsdom');
 
 exports.getWeather = function(params, cb){
-  jsdom.env({
-    html: 'http://www.met.ie/forecasts/',
-    scripts: [],
-    done: function(errors, window) {
+  jsdom.env('http://www.met.ie/forecasts/', ["http://code.jquery.com/jquery.js"], function(errors, window) {
       if (errors){
         return cb(errors);
       }
@@ -14,7 +11,7 @@ exports.getWeather = function(params, cb){
 
       return cb(null, {forecast: forecast, images: images});
     }
-  });
+  );
 };
 
 
@@ -57,10 +54,17 @@ function getWeatherImages(window) {
   return images;
 }
 
+function getForecasts (window) {
+	var forecast_text = window.$('.maincontent').text();
+	return forecast_text;
+}
+
+
 /*
  Get the forecast from the DOM
  @author @danielconnor
  */
+/*
 function getForecasts(window){
 // Thanks to @danielconnor for the parser code!
   var document = window.document,
@@ -90,4 +94,4 @@ function getForecasts(window){
 
   }
   return forecast;
-}
+}*/
