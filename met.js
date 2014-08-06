@@ -17,10 +17,6 @@
 		}
 
 		forecast = forecast.split('\n').map(function (el) {
-			return el.trim()
-		}).filter(function (el) {
-			return el != '';
-		}).map(function (el) {
 			if (el === "Today" || el === "Tomorrow" || el === "Outlook") {
 				return '\n  ' + el.green.underline + '\n';
 			} else {

@@ -56,42 +56,10 @@ function getWeatherImages(window) {
 
 function getForecasts (window) {
 	var forecast_text = window.$('.maincontent').text();
-	return forecast_text;
+	return forecast_text.split('\n').map(function (el) {
+		return el.trim();
+	}).filter(function (el) {
+		return el != '';
+	}).join('\n');
 }
 
-
-/*
- Get the forecast from the DOM
- @author @danielconnor
- */
-/*
-function getForecasts(window){
-// Thanks to @danielconnor for the parser code!
-  var document = window.document,
-  days = document.getElementsByClassName("daybox"),
-  day,
-  dayText,
-  nextDay,
-  sibling,
-  forecast = {},
-  images = {},
-  index = 0;
-
-  while(day = days[index++]) {
-    nextDay = days[index];
-    var dayForecast = "";
-    sibling = day.nextSibling;
-
-    while(sibling && sibling != nextDay ) {
-      var append = sibling.textContent.trim();
-      if (append!==""){
-        dayForecast += append;
-        dayForecast += '\n';
-      }
-      sibling = sibling.nextSibling;
-    }
-    forecast[day.textContent.trim()] = dayForecast;
-
-  }
-  return forecast;
-}*/
